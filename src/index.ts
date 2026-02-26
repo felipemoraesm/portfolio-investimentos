@@ -68,7 +68,7 @@ app.delete('/investimentos/:id', async (req, res) => {
 connectDB()
 
 app.get('/', (req, res) => {
-    res.send('Bem-vindo à API de Investimentos do Felipe!')
+    res.send('Servidor rodando com driver nativo do MongoDB')
 })
 
 app.listen(3000, () => {
