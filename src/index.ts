@@ -1,5 +1,5 @@
 import express from 'express'
-import { MongoClient } from 'mongodb'
+import { MongoClient, ObjectId } from 'mongodb'
 
 const app = express()
 app.use(express.json())
@@ -44,6 +44,24 @@ app.get('/investimentos', async (req, res) => {
         res.status(200).send(investimentos)
     } catch (erro) {
         res.status(500).send({ mensagem: "Erro ao buscar", erro })
+    }
+})
+
+app.delete('/investimentos/:id', async (req, res) => {
+    try {
+        const db = client.db('meu_projeto')
+        const collection = db.collection('portfolio')
+        
+        const id = req.params.id
+        const resultado = await collection.deleteOne({ _id: new ObjectId(id) })
+        
+        if (resultado.deletedCount === 0) {
+            return res.status(404).send({ mensagem: "Investimento não encontrado" })
+        }
+        
+        res.status(200).send({ mensagem: "Investimento removido com sucesso" })
+    } catch (erro) {
+        res.status(500).send({ mensagem: "Erro ao deletar", erro })
     }
 })
 
