@@ -1,0 +1,15 @@
+### Cadastrar um investimento
+POST http://localhost:3000/investimentos
+Content-Type: application/json
+
+{
+  "ticker": "PETR4",
+  "quantidade": 10,
+  "preco": 38.5
+}
+
+### Listar investimentos
+GET http://localhost:3000/investimentos
+
+### Remover um investimento (troque pelo _id retornado na listagem)
+DELETE http://localhost:3000/investimentos/COLOQUE_O_ID_AQUI

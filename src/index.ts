@@ -1,11 +1,17 @@
+import 'dotenv/config'
 import express from 'express'
 import { MongoClient, ObjectId } from 'mongodb'
 
 const app = express()
 app.use(express.json())
 
-const uri = "mongodb+srv://admin:senha123@cluster0.tmco7zw.mongodb.net/?appName=Cluster0"
+const uri = process.env.MONGO_URI
+if (!uri) {
+    console.error("Defina a variável MONGO_URI no arquivo .env (veja .env.example)")
+    process.exit(1)
+}
 const client = new MongoClient(uri)
+const PORT = Number(process.env.PORT) || 3000
 
 async function connectDB() {
     try {
@@ -71,6 +77,6 @@ app.get('/', (req, res) => {
     res.send('Servidor rodando com driver nativo do MongoDB')
 })
 
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000')
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`)
 })
